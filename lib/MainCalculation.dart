@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 class MainCalculation extends StatefulWidget{
     @override
-  MainCalculationState createState() => MainCalculationState();
+  MainCalculationState createState() {
+    return MainCalculationState();
+    }
 }
 class MainCalculationState extends State<MainCalculation> {
   var hours = 0.0;
@@ -12,6 +14,7 @@ class MainCalculationState extends State<MainCalculation> {
   var totalPay = 0.0;
   var tax = 0.0;
 
+  // Controller to set the value to be blank if the entered value cannot pass the validation
   TextEditingController hoursController = TextEditingController();
   TextEditingController hourlyRateController = TextEditingController();
 
@@ -36,7 +39,9 @@ class MainCalculationState extends State<MainCalculation> {
 
   // Validate user input function
   bool validateInput() {
+    // if wrong value
     if (hours <= 0 || hourlyRate <= 0) {
+      // set all the value state to 0
       setState(() {
         hours = 0;
         hourlyRate = 0;
@@ -45,16 +50,18 @@ class MainCalculationState extends State<MainCalculation> {
         totalPay = 0;
         tax = 0;
       });
-    hourlyRate = 0.0;
+
       showDialog(
         context: context,
         builder: (BuildContext context) {
+          // alert for wrong value
           return AlertDialog(
             title: const Text('Input Error'),
             content: const Text('Please enter valid number of hours and hourly rate.'),
             actions: [
               TextButton(
                 onPressed: () {
+                  // clear the input value if wrong value
                   Navigator.of(context).pop();
                   hoursController.clear();
                   hourlyRateController.clear();
@@ -87,9 +94,11 @@ class MainCalculationState extends State<MainCalculation> {
                 ),
                 borderRadius: BorderRadius.circular(4.0),
               ),
+              // Number of Hours Text Field
               child: TextField(
                 controller: hoursController,
                  onChanged: (value) {
+                // set the hours state to the input value, set it to 0.0 if the value cannot be parsed to double
                  final parsedValue = double.tryParse(value) ?? 0.0;
                  setState(() {
                   hours = parsedValue;
@@ -111,9 +120,11 @@ class MainCalculationState extends State<MainCalculation> {
                 ),
                 borderRadius: BorderRadius.circular(4.0),
               ),
+              // Hourly Rate Text Field
               child: TextField(
                 controller: hourlyRateController,
                 onChanged: (value) {
+                // set the hourlyRate state to the input value, set it to 0.0 if the value cannot be parsed to double
                  final parsedValue = double.tryParse(value) ?? 0.0;
               setState(() {
                 hourlyRate = parsedValue;
@@ -127,6 +138,7 @@ class MainCalculationState extends State<MainCalculation> {
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
+              // Calculate button: will run calculateResult function if validateInput is true
               onPressed: () {
               if (validateInput()) {
                 setState(() {
@@ -139,6 +151,7 @@ class MainCalculationState extends State<MainCalculation> {
 
             const SizedBox(height: 18.0),
 
+            // Calculation Report Container
             Container(
             width: 350.0,
             decoration: BoxDecoration(
@@ -151,6 +164,7 @@ class MainCalculationState extends State<MainCalculation> {
             padding: EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              // Displaying the Calculation Report Result
               children: [
                 const Text(
                   'Report',

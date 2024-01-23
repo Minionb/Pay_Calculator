@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class About extends StatelessWidget{
 
-  // About part UI Design
+  // About part UI Design: Stateless
   @override
   Widget build(BuildContext context) {
     return 
